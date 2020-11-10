@@ -1,11 +1,25 @@
-from .models import User, Driver, Manager
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
+
+from .models import User, Driver, Manager
 
 
 class UserSerializer(serializers.ModelSerializer):
+    confirm_password = serializers.CharField(write_only=True)
+
     class Meta:
         model = User
-        fields = ['username', 'email', 'first_name', 'last_name', 'id']
+        fields = ['username', 'email', 'first_name', 'last_name', 'password']
+        read_only_fields = ['id']
+
+    def validate(self, attrs):
+        password = attrs.get('password', None)
+        confirm_password = attrs.get('confirm_password', None)
+
+        if not password or password != confirm_password:
+            raise ValidationError('password and confirm_password must be equal')
+
+        return attrs
 
 
 class DriverSerializer(serializers.ModelSerializer):
@@ -13,7 +27,7 @@ class DriverSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Driver
-        fields = ['user', 'manager', 'car_type', 'experience', 'current_location', 'health_state', 'license_type']
+        fields = ['manager', 'car_type', 'experience', 'current_location', 'health_state', 'license_type']
 
 
 class ManagerSerializer(serializers.HyperlinkedModelSerializer):
@@ -21,4 +35,4 @@ class ManagerSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Manager
-        fields = ['user', 'company']
+        fields = ['company']
