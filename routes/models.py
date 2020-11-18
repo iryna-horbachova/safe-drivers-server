@@ -1,10 +1,6 @@
-#from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.gis.db import models
 from users import models as users_models
-
-from geopy.geocoders import Nominatim
-
 
 
 class Route(models.Model):
@@ -22,6 +18,7 @@ class Route(models.Model):
 
     manager = models.ForeignKey(users_models.Manager, related_name="route_manager", on_delete=models.CASCADE)
 
+    title = models.CharField(null=True, blank=True, max_length=100)
     priority = models.CharField(choices=PRIORITY_CHOICES, max_length=1, null=True, blank=True)
     load_type = models.CharField(choices=LOAD_CHOICES, max_length=1, null=True, blank=True)
     load_quantity = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(1000)], blank=True, null=True, default=None)
@@ -34,11 +31,8 @@ class Route(models.Model):
     def distance(self):
         return round(self.start_location.distance(self.end_location) * 100)
 
-    @property
-    def start_location_string(self):
-        geolocator = Nominatim(user_agent="routes")
-
-        return geolocator.reverse(f"{self.start_location.lat}, 13.376294")
+    def __str__(self):
+        return f"{self.title}"
 
 
 class DesignatedRoute(models.Model):

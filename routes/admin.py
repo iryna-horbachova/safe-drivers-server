@@ -1,18 +1,16 @@
 from django.contrib import admin
-from django.forms.widgets import TextInput
-
 from django.contrib.gis.admin import OSMGeoAdmin
 
 from . import models
 
 
 class RouteAdmin(OSMGeoAdmin):
-    list_display = ('manager', 'start_location', 'end_location', 'distance')
-    readonly_fields = ('distance','start_location_string')
+    list_display = ('manager', 'priority', 'load_type', 'distance')
+    readonly_fields = ('distance',)
 
 
 class DesignatedRouteAdmin(OSMGeoAdmin):
-    pass
+    list_display = ('route', 'driver', 'status', 'current_location')
 
 
 admin.site.register(models.Route, RouteAdmin)

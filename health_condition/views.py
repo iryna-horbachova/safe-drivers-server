@@ -1,3 +1,14 @@
-from django.shortcuts import render
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIView
 
-# Create your views here.
+from . import models
+from . import serializers
+
+
+class HealthConditionReadUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = models.HealthCondition.objects.all()
+    serializer_class = serializers.HealthConditionSerializer
+
+
+class HealthConditionListCreateAPIView(ListCreateAPIView):
+    queryset = models.HealthCondition.objects.all()
+    serializer_class = serializers.HealthConditionSerializer

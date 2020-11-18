@@ -1,8 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
-
 from django.contrib.gis.db import models
-from django.utils.translation import ugettext_lazy as _
 
 
 class User(AbstractUser):
@@ -26,12 +24,8 @@ class Manager(models.Model):
 class Driver(models.Model):
 
     CAR_TYPE_CHOICES = (
-        ("SP", "Small Passenger"),
-        ("MP", "Medium Passenger"),
-        ("BP", "Big Passenger"),
-        ("LC", "Light Cargo"),
-        ("MC", "Medium Cargo"),
-        ("BC", "Big Cargo"),
+        ("P", "Passenger"),
+        ("C", "Cargo"),
     )
 
     LICENSE_CHOICES = (
@@ -46,7 +40,12 @@ class Driver(models.Model):
     car_type = models.CharField(choices=CAR_TYPE_CHOICES, max_length=2, null=True, blank=True)
     car_max_load = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(1000)], blank=True, null=True, default=None)
     experience = models.IntegerField(validators=[MinValueValidator(1)])
-    current_location = models.PointField(blank=True, null=True, default=None)
+    pay_for_km = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(1000)], blank=True,
+                                       null=True, default=None)
+    average_speed_per_hour = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(200)], blank=True,
+                                       null=True, default=None)
+
+    current_location = models.PointField(null=True, default=None)
     health_state = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)], blank=True, null=True, default=None)
     license_type = models.CharField(choices=LICENSE_CHOICES, max_length=1, null=True, blank=True)
 

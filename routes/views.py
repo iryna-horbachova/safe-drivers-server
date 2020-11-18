@@ -9,9 +9,6 @@ class RouteReadUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
     queryset = models.Route.objects.all()
     serializer_class = serializers.RouteSerializer
 
-    #def get_object(self):
-     #   return models.Route.objects.filter(manager__user=self.request.user)
-
 
 class RouteListCreateAPIView(ListCreateAPIView):
     queryset = models.Route.objects.all()

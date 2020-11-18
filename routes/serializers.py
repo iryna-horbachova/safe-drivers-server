@@ -5,12 +5,9 @@ from users.models import Driver
 
 
 class RouteSerializer(serializers.ModelSerializer):
-    #distance = serializers.Field()
-
     class Meta:
         model = Route
-        fields = [#'url',
-                  'manager',
+        fields = ['id',
                   'priority',
                   'load_type',
                   'load_quantity',
