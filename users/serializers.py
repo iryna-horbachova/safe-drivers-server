@@ -17,7 +17,9 @@ class DriverSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Driver
-        fields = ['user', 'manager', 'car_type', 'experience', 'current_location', 'health_state', 'license_type']
+        fields = ['user', 'manager', 'car_type', 'car_max_load',
+                  'experience', 'current_location', 'health_state',
+                  'pay_for_km', 'average_speed_per_hour', 'license_type']
 
 
 class ManagerSerializer(serializers.HyperlinkedModelSerializer):
@@ -134,8 +136,3 @@ class ManagerRegistrationSerializer(serializers.ModelSerializer):
 
         return user
 
-
-class UserChangeSerializer(serializers.Serializer):
-    class Meta:
-        model = User
-        fields = ['email', 'first_name', 'last_name', 'image']

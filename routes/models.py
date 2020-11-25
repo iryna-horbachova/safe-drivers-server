@@ -31,6 +31,10 @@ class Route(models.Model):
     def distance(self):
         return round(self.start_location.distance(self.end_location) * 100)
 
+    @property
+    def is_in_progress(self):
+        return DesignatedRoute.objects.filter(route_id=self.id).exists()
+
     def __str__(self):
         return f"{self.title}"
 

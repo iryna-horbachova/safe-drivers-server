@@ -5,7 +5,7 @@ from . import models
 
 
 class RouteAdmin(OSMGeoAdmin):
-    list_display = ('manager', 'priority', 'load_type', 'distance')
+    list_display = ('manager', 'priority', 'load_type', 'distance', 'is_in_progress')
     readonly_fields = ('distance',)
 
 
