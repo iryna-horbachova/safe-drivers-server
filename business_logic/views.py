@@ -173,3 +173,76 @@ def designate_route(request):
     d_route = DesignatedRoute.objects.create(route=route, driver=driver, status="N")
 
     return Response(DesignatedRouteSerializer(d_route).data)
+
+
+class Statuses(Enum):
+    HEALTH_STATE = 1
+    DISTANCE = 2
+    PAY_FOR_KM = 3
+    AVERAGE_SPEED = 4
+    EXPERIENCE = 5
+
+
+@api_view(http_method_names=['POST'])
+@permission_classes([IsAuthenticated])
+def designate_routes(request):
+    all_routes =  list(Route.objects.filter(manager__user_id=request.user.id))
+    designated_routes = list(DesignatedRoute.objects.all())
+    # Remove routes in progress
+    for droute in designated_routes:
+        if droute.route in all_routes:
+            all_routes.remove(droute.route)
+            
+    print("all_routes")
+    print(all_routes)
+    # Sort routes by priority
+    routes = []
+    for route in all_routes:
+        if route.priority == 'H':
+            routes.insert(0, route)
+        elif route.priority == 'S':
+            routes.append(route)
+    for route in all_routes:
+        if route.priority == 'L':
+            routes.append(route)
+
+    print("sorted routes")
+    print(routes)
+
+    # Getting all drivers that currently are not assigned to any of the routes
+    drivers = list(Driver.objects.filter(manager__user_id=request.user.id))
+
+    for d_route in designated_routes:
+        if d_route.driver in drivers and d_route.status != "F":
+            drivers.remove(d_route.driver)
+
+    # Greedy algorithms
+    # Iterate through all the routes
+    for route in routes:
+        print("current route")
+        print(route)
+        drivers_costs = {}
+        # Calculate cost of current route for each driver
+        for driver in drivers:
+            cost = driver.pay_for_km *\
+                            round(route.start_location.distance(driver.current_location) * 100) +\
+                            driver.pay_for_km * route.distance
+            drivers_costs[driver] = cost
+
+        sorted_costs = {k: v for k, v in sorted(drivers_costs.items(), key=lambda item: item[1])}
+        print("sorted costs")
+        print(sorted_costs)
+
+        # Assign the first driver who satisfies current route requirements
+        for driver, cost in sorted_costs.items():
+            if (driver.experience >= route.min_experience
+                and driver.car_type == route.load_type
+                and driver.car_max_load >= route.load_quantity
+                and driver.health_state >= route.min_health):
+                drivers.remove(driver)
+                d_route = DesignatedRoute.objects.create(route=route, driver=driver, status="N")
+                print(d_route)
+                break;
+
+    return Response("Routes successfully designated")
+

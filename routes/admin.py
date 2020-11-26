@@ -5,12 +5,13 @@ from . import models
 
 
 class RouteAdmin(OSMGeoAdmin):
-    list_display = ('manager', 'priority', 'load_type', 'distance', 'is_in_progress')
+    list_display = ('manager', 'priority', 'load_type', 'load_quantity', 'distance',
+                    'min_experience', 'min_health', 'is_in_progress')
     readonly_fields = ('distance',)
 
 
 class DesignatedRouteAdmin(OSMGeoAdmin):
-    list_display = ('route', 'driver', 'status', 'current_location')
+    list_display = ('route', 'driver', 'status',)
 
 
 admin.site.register(models.Route, RouteAdmin)

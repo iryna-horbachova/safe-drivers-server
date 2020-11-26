@@ -23,6 +23,9 @@ class Route(models.Model):
     load_type = models.CharField(choices=LOAD_CHOICES, max_length=1, null=True, blank=True)
     load_quantity = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(1000)], blank=True, null=True, default=None)
 
+    min_experience = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(100)], default=0)
+    min_health = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)], default=0)
+
     start_location = models.PointField()
     end_location = models.PointField()
 
@@ -51,4 +54,3 @@ class DesignatedRoute(models.Model):
     driver = models.ForeignKey(users_models.Driver, related_name="route_driver",
                                on_delete=models.CASCADE, blank=True, null=True)
     status = models.CharField(choices=STATUS_CHOICES, max_length=1, null=True, blank=True)
-    current_location = models.PointField(blank=True, null=True, default=None)

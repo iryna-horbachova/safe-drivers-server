@@ -16,6 +16,8 @@ class RouteSerializer(serializers.ModelSerializer):
                   'start_location',
                   'end_location',
                   'distance',
+                  'min_health',
+                  'min_experience',
                   'is_in_progress']
 
 
