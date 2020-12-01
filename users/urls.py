@@ -10,4 +10,6 @@ urlpatterns = [
     path('register/manager', views.RegisterManager.as_view(), name="register-manager"),
     path('register/driver', views.RegisterDriver.as_view(), name="register-driver"),
     path('login/', views.CustomObtainAuthToken.as_view(), name="login"),
+    path('logout/', views.Logout.as_view(), name="logout"),
+    path('manager_profile/', views.ManagerView.as_view(), name='manager-detail'),
 ]

@@ -18,7 +18,8 @@ class RouteSerializer(serializers.ModelSerializer):
                   'distance',
                   'min_health',
                   'min_experience',
-                  'is_in_progress']
+                  'is_in_progress',
+                  'manager']
 
 
 class DesignatedRouteSerializer(serializers.ModelSerializer):

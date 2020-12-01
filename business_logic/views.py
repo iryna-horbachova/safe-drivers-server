@@ -139,7 +139,7 @@ def assign_driver_to_a_route(request, route_pk):
         distance = round(route.start_location.distance(driver.current_location) * 100)
 
         health_weight = coeffs[priorities.index(Criterias.HEALTH_STATE.value)] * \
-                  ((driver.health_state - min_health_state) / (max_health_state - min_health_state))
+                  ((driver.health_state - min_health_state) / ((max_health_state - min_health_state) if (max_health_state - min_health_state) else 1))
         distance_weight = coeffs[priorities.index(Criterias.DISTANCE.value)] * \
                           ((max_distance - distance) / (max_distance - min_distance))
         pay_for_km_weight = coeffs[priorities.index(Criterias.PAY_FOR_KM.value)] * \
@@ -192,7 +192,7 @@ def designate_routes(request):
     for droute in designated_routes:
         if droute.route in all_routes:
             all_routes.remove(droute.route)
-            
+
     print("all_routes")
     print(all_routes)
     # Sort routes by priority

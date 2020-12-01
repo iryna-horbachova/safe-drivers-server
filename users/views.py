@@ -72,6 +72,25 @@ class DriverListCreateAPIView(ListCreateAPIView):
     queryset = models.Driver.objects.all()
     serializer_class = serializers.DriverSerializer
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = serializers.DriverSerializer(queryset.filter(manager__user=self.request.user), many=True)
+        return Response(serializer.data)
+
+
+'''class ManagerReadUpdateDeleteAPIView(RetrieveUpdateDestroyAPIView):
+    queryset = models.Manager.objects.all()
+    serializer_class = serializers.ManagerSerializer
+
+    def get_queryset(self):
+        return models.Manager.objects.filter(user_id=self.request.user.id)'''
+
+
+class ManagerView(APIView):
+    def get(self, request, *args, **kwargs):
+        manager = models.Manager.objects.filter(user_id=request.user.id)[0]
+        serializer = serializers.ManagerSerializer(manager)
+        return Response(serializer.data)
 
 @api_view(http_method_names=['GET'])
 def get_all_car_types(request):

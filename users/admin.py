@@ -18,7 +18,8 @@ class DriverAdmin(admin.ModelAdmin):
                     "car_max_load",
                     "pay_for_km",
                     "average_speed_per_hour",
-                    "license_type"
+                    "license_type",
+                    "health_state",
                     )
 
 

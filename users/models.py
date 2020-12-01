@@ -46,7 +46,7 @@ class Driver(models.Model):
                                        null=True, default=None)
 
     current_location = models.PointField(null=True, default=None)
-    health_state = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)], blank=True, null=True, default=None)
+    health_state = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(10)], blank=True, null=True, default=1)
     license_type = models.CharField(choices=LICENSE_CHOICES, max_length=1, null=True, blank=True)
 
     def __str__(self):
