@@ -1,0 +1,1778 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 13.0
+-- Dumped by pg_dump version 13.0
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+ALTER TABLE ONLY public.users_user_user_permissions DROP CONSTRAINT users_user_user_permissions_user_id_20aca447_fk_users_user_id;
+ALTER TABLE ONLY public.users_user_user_permissions DROP CONSTRAINT users_user_user_perm_permission_id_0b93982e_fk_auth_perm;
+ALTER TABLE ONLY public.users_user_groups DROP CONSTRAINT users_user_groups_user_id_5f6f5a90_fk_users_user_id;
+ALTER TABLE ONLY public.users_user_groups DROP CONSTRAINT users_user_groups_group_id_9afc8d0e_fk_auth_group_id;
+ALTER TABLE ONLY public.users_manager DROP CONSTRAINT users_manager_user_id_f7714736_fk_users_user_id;
+ALTER TABLE ONLY public.users_driver DROP CONSTRAINT users_driver_user_id_047e69b8_fk_users_user_id;
+ALTER TABLE ONLY public.users_driver DROP CONSTRAINT users_driver_manager_id_8e0d49f7_fk_users_manager_user_id;
+ALTER TABLE ONLY public.routes_route DROP CONSTRAINT routes_route_manager_id_be140b9b_fk_users_manager_user_id;
+ALTER TABLE ONLY public.routes_designatedroute DROP CONSTRAINT routes_designatedroute_route_id_b89bd471_fk_routes_route_id;
+ALTER TABLE ONLY public.routes_designatedroute DROP CONSTRAINT routes_designatedrou_driver_id_3168f6d7_fk_users_dri;
+ALTER TABLE ONLY public.health_condition_healthcondition DROP CONSTRAINT health_condition_hea_driver_id_facf531f_fk_users_dri;
+ALTER TABLE ONLY public.django_admin_log DROP CONSTRAINT django_admin_log_user_id_c564eba6_fk_users_user_id;
+ALTER TABLE ONLY public.django_admin_log DROP CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co;
+ALTER TABLE ONLY public.authtoken_token DROP CONSTRAINT authtoken_token_user_id_35299eff_fk_users_user_id;
+ALTER TABLE ONLY public.auth_permission DROP CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co;
+ALTER TABLE ONLY public.auth_group_permissions DROP CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id;
+ALTER TABLE ONLY public.auth_group_permissions DROP CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm;
+DROP INDEX public.users_user_username_06e46fe6_like;
+DROP INDEX public.users_user_user_permissions_user_id_20aca447;
+DROP INDEX public.users_user_user_permissions_permission_id_0b93982e;
+DROP INDEX public.users_user_groups_user_id_5f6f5a90;
+DROP INDEX public.users_user_groups_group_id_9afc8d0e;
+DROP INDEX public.users_driver_manager_id_8e0d49f7;
+DROP INDEX public.users_driver_current_location_id;
+DROP INDEX public.routes_route_start_location_id;
+DROP INDEX public.routes_route_manager_id_be140b9b;
+DROP INDEX public.routes_route_end_location_id;
+DROP INDEX public.routes_designatedroute_route_id_b89bd471;
+DROP INDEX public.routes_designatedroute_driver_id_3168f6d7;
+DROP INDEX public.health_condition_healthcondition_driver_id_facf531f;
+DROP INDEX public.django_session_session_key_c0390e0f_like;
+DROP INDEX public.django_session_expire_date_a5c62663;
+DROP INDEX public.django_admin_log_user_id_c564eba6;
+DROP INDEX public.django_admin_log_content_type_id_c4bce8eb;
+DROP INDEX public.authtoken_token_key_10f0b77e_like;
+DROP INDEX public.auth_permission_content_type_id_2f476e4b;
+DROP INDEX public.auth_group_permissions_permission_id_84c5c92e;
+DROP INDEX public.auth_group_permissions_group_id_b120cbf9;
+DROP INDEX public.auth_group_name_a6ea08ec_like;
+ALTER TABLE ONLY public.users_user DROP CONSTRAINT users_user_username_key;
+ALTER TABLE ONLY public.users_user_user_permissions DROP CONSTRAINT users_user_user_permissions_user_id_permission_id_43338c45_uniq;
+ALTER TABLE ONLY public.users_user_user_permissions DROP CONSTRAINT users_user_user_permissions_pkey;
+ALTER TABLE ONLY public.users_user DROP CONSTRAINT users_user_pkey;
+ALTER TABLE ONLY public.users_user_groups DROP CONSTRAINT users_user_groups_user_id_group_id_b88eab82_uniq;
+ALTER TABLE ONLY public.users_user_groups DROP CONSTRAINT users_user_groups_pkey;
+ALTER TABLE ONLY public.users_manager DROP CONSTRAINT users_manager_pkey;
+ALTER TABLE ONLY public.users_driver DROP CONSTRAINT users_driver_pkey;
+ALTER TABLE ONLY public.routes_route DROP CONSTRAINT routes_route_pkey;
+ALTER TABLE ONLY public.routes_designatedroute DROP CONSTRAINT routes_designatedroute_pkey;
+ALTER TABLE ONLY public.health_condition_healthcondition DROP CONSTRAINT health_condition_healthcondition_pkey;
+ALTER TABLE ONLY public.django_session DROP CONSTRAINT django_session_pkey;
+ALTER TABLE ONLY public.django_migrations DROP CONSTRAINT django_migrations_pkey;
+ALTER TABLE ONLY public.django_content_type DROP CONSTRAINT django_content_type_pkey;
+ALTER TABLE ONLY public.django_content_type DROP CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq;
+ALTER TABLE ONLY public.django_admin_log DROP CONSTRAINT django_admin_log_pkey;
+ALTER TABLE ONLY public.authtoken_token DROP CONSTRAINT authtoken_token_user_id_key;
+ALTER TABLE ONLY public.authtoken_token DROP CONSTRAINT authtoken_token_pkey;
+ALTER TABLE ONLY public.auth_permission DROP CONSTRAINT auth_permission_pkey;
+ALTER TABLE ONLY public.auth_permission DROP CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq;
+ALTER TABLE ONLY public.auth_group DROP CONSTRAINT auth_group_pkey;
+ALTER TABLE ONLY public.auth_group_permissions DROP CONSTRAINT auth_group_permissions_pkey;
+ALTER TABLE ONLY public.auth_group_permissions DROP CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq;
+ALTER TABLE ONLY public.auth_group DROP CONSTRAINT auth_group_name_key;
+ALTER TABLE public.users_user_user_permissions ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.users_user_groups ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.users_user ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.routes_route ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.routes_designatedroute ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.health_condition_healthcondition ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.django_migrations ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.django_content_type ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.django_admin_log ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.auth_permission ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.auth_group_permissions ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.auth_group ALTER COLUMN id DROP DEFAULT;
+DROP SEQUENCE public.users_user_user_permissions_id_seq;
+DROP TABLE public.users_user_user_permissions;
+DROP SEQUENCE public.users_user_id_seq;
+DROP SEQUENCE public.users_user_groups_id_seq;
+DROP TABLE public.users_user_groups;
+DROP TABLE public.users_user;
+DROP TABLE public.users_manager;
+DROP TABLE public.users_driver;
+DROP SEQUENCE public.routes_route_id_seq;
+DROP TABLE public.routes_route;
+DROP SEQUENCE public.routes_designatedroute_id_seq;
+DROP TABLE public.routes_designatedroute;
+DROP SEQUENCE public.health_condition_healthcondition_id_seq;
+DROP TABLE public.health_condition_healthcondition;
+DROP TABLE public.django_session;
+DROP SEQUENCE public.django_migrations_id_seq;
+DROP TABLE public.django_migrations;
+DROP SEQUENCE public.django_content_type_id_seq;
+DROP TABLE public.django_content_type;
+DROP SEQUENCE public.django_admin_log_id_seq;
+DROP TABLE public.django_admin_log;
+DROP TABLE public.authtoken_token;
+DROP SEQUENCE public.auth_permission_id_seq;
+DROP TABLE public.auth_permission;
+DROP SEQUENCE public.auth_group_permissions_id_seq;
+DROP TABLE public.auth_group_permissions;
+DROP SEQUENCE public.auth_group_id_seq;
+DROP TABLE public.auth_group;
+DROP EXTENSION postgis_topology;
+DROP EXTENSION postgis;
+DROP SCHEMA topology;
+--
+-- Name: topology; Type: SCHEMA; Schema: -; Owner: irynahorbachova
+--
+
+CREATE SCHEMA topology;
+
+
+ALTER SCHEMA topology OWNER TO irynahorbachova;
+
+--
+-- Name: SCHEMA topology; Type: COMMENT; Schema: -; Owner: irynahorbachova
+--
+
+COMMENT ON SCHEMA topology IS 'PostGIS Topology schema';
+
+
+--
+-- Name: postgis; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION postgis; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION postgis IS 'PostGIS geometry and geography spatial types and functions';
+
+
+--
+-- Name: postgis_topology; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS postgis_topology WITH SCHEMA topology;
+
+
+--
+-- Name: EXTENSION postgis_topology; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION postgis_topology IS 'PostGIS topology spatial types and functions';
+
+
+SET default_tablespace = '';
+
+SET default_table_access_method = heap;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+ALTER TABLE public.auth_group OWNER TO admin;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_group_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_id_seq OWNER TO admin;
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id integer NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.auth_group_permissions OWNER TO admin;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_group_permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO admin;
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.auth_permission OWNER TO admin;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.auth_permission_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.auth_permission_id_seq OWNER TO admin;
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
+
+
+--
+-- Name: authtoken_token; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.authtoken_token (
+    key character varying(40) NOT NULL,
+    created timestamp with time zone NOT NULL,
+    user_id integer NOT NULL
+);
+
+
+ALTER TABLE public.authtoken_token OWNER TO admin;
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+ALTER TABLE public.django_admin_log OWNER TO admin;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.django_admin_log_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_admin_log_id_seq OWNER TO admin;
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.django_content_type OWNER TO admin;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.django_content_type_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_content_type_id_seq OWNER TO admin;
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.django_migrations (
+    id integer NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_migrations OWNER TO admin;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.django_migrations_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.django_migrations_id_seq OWNER TO admin;
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.django_session OWNER TO admin;
+
+--
+-- Name: health_condition_healthcondition; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.health_condition_healthcondition (
+    id integer NOT NULL,
+    heart_rate integer NOT NULL,
+    body_temperature integer NOT NULL,
+    respiration_rate_per_minute integer NOT NULL,
+    blood_pressure_systolic integer NOT NULL,
+    blood_pressure_diastolic integer NOT NULL,
+    blood_oxygen_level integer NOT NULL,
+    blood_alcohol_content integer NOT NULL,
+    drugs_alcohol_content integer NOT NULL,
+    datetime timestamp with time zone NOT NULL,
+    driver_id integer NOT NULL
+);
+
+
+ALTER TABLE public.health_condition_healthcondition OWNER TO admin;
+
+--
+-- Name: health_condition_healthcondition_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.health_condition_healthcondition_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.health_condition_healthcondition_id_seq OWNER TO admin;
+
+--
+-- Name: health_condition_healthcondition_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.health_condition_healthcondition_id_seq OWNED BY public.health_condition_healthcondition.id;
+
+
+--
+-- Name: routes_designatedroute; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.routes_designatedroute (
+    id integer NOT NULL,
+    status character varying(1),
+    driver_id integer,
+    route_id integer NOT NULL
+);
+
+
+ALTER TABLE public.routes_designatedroute OWNER TO admin;
+
+--
+-- Name: routes_designatedroute_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.routes_designatedroute_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.routes_designatedroute_id_seq OWNER TO admin;
+
+--
+-- Name: routes_designatedroute_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.routes_designatedroute_id_seq OWNED BY public.routes_designatedroute.id;
+
+
+--
+-- Name: routes_route; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.routes_route (
+    id integer NOT NULL,
+    start_location public.geometry(Point,4326) NOT NULL,
+    end_location public.geometry(Point,4326) NOT NULL,
+    manager_id integer NOT NULL,
+    load_quantity integer,
+    load_type character varying(1),
+    priority character varying(1),
+    title character varying(100),
+    min_experience integer NOT NULL,
+    min_health integer NOT NULL
+);
+
+
+ALTER TABLE public.routes_route OWNER TO admin;
+
+--
+-- Name: routes_route_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.routes_route_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.routes_route_id_seq OWNER TO admin;
+
+--
+-- Name: routes_route_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.routes_route_id_seq OWNED BY public.routes_route.id;
+
+
+--
+-- Name: users_driver; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.users_driver (
+    user_id integer NOT NULL,
+    car_type character varying(2),
+    experience integer NOT NULL,
+    manager_id integer NOT NULL,
+    health_state integer,
+    license_type character varying(1),
+    car_max_load integer,
+    average_speed_per_hour integer,
+    current_location public.geometry(Point,4326),
+    pay_for_km integer
+);
+
+
+ALTER TABLE public.users_driver OWNER TO admin;
+
+--
+-- Name: users_manager; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.users_manager (
+    user_id integer NOT NULL,
+    company character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.users_manager OWNER TO admin;
+
+--
+-- Name: users_user; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.users_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(150) NOT NULL,
+    first_name character varying(150) NOT NULL,
+    last_name character varying(150) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL,
+    is_manager boolean NOT NULL,
+    is_driver boolean NOT NULL
+);
+
+
+ALTER TABLE public.users_user OWNER TO admin;
+
+--
+-- Name: users_user_groups; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.users_user_groups (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users_user_groups OWNER TO admin;
+
+--
+-- Name: users_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.users_user_groups_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_groups_id_seq OWNER TO admin;
+
+--
+-- Name: users_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.users_user_groups_id_seq OWNED BY public.users_user_groups.id;
+
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.users_user_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_id_seq OWNER TO admin;
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.users_user_id_seq OWNED BY public.users_user.id;
+
+
+--
+-- Name: users_user_user_permissions; Type: TABLE; Schema: public; Owner: admin
+--
+
+CREATE TABLE public.users_user_user_permissions (
+    id integer NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+ALTER TABLE public.users_user_user_permissions OWNER TO admin;
+
+--
+-- Name: users_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: admin
+--
+
+CREATE SEQUENCE public.users_user_user_permissions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.users_user_user_permissions_id_seq OWNER TO admin;
+
+--
+-- Name: users_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: admin
+--
+
+ALTER SEQUENCE public.users_user_user_permissions_id_seq OWNED BY public.users_user_user_permissions.id;
+
+
+--
+-- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
+
+
+--
+-- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
+
+
+--
+-- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
+
+
+--
+-- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
+
+
+--
+-- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
+
+
+--
+-- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
+
+
+--
+-- Name: health_condition_healthcondition id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.health_condition_healthcondition ALTER COLUMN id SET DEFAULT nextval('public.health_condition_healthcondition_id_seq'::regclass);
+
+
+--
+-- Name: routes_designatedroute id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.routes_designatedroute ALTER COLUMN id SET DEFAULT nextval('public.routes_designatedroute_id_seq'::regclass);
+
+
+--
+-- Name: routes_route id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.routes_route ALTER COLUMN id SET DEFAULT nextval('public.routes_route_id_seq'::regclass);
+
+
+--
+-- Name: users_user id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_user ALTER COLUMN id SET DEFAULT nextval('public.users_user_id_seq'::regclass);
+
+
+--
+-- Name: users_user_groups id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_user_groups ALTER COLUMN id SET DEFAULT nextval('public.users_user_groups_id_seq'::regclass);
+
+
+--
+-- Name: users_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.users_user_user_permissions_id_seq'::regclass);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can view log entry	1	view_logentry
+5	Can add permission	2	add_permission
+6	Can change permission	2	change_permission
+7	Can delete permission	2	delete_permission
+8	Can view permission	2	view_permission
+9	Can add group	3	add_group
+10	Can change group	3	change_group
+11	Can delete group	3	delete_group
+12	Can view group	3	view_group
+13	Can add content type	4	add_contenttype
+14	Can change content type	4	change_contenttype
+15	Can delete content type	4	delete_contenttype
+16	Can view content type	4	view_contenttype
+17	Can add session	5	add_session
+18	Can change session	5	change_session
+19	Can delete session	5	delete_session
+20	Can view session	5	view_session
+21	Can add user	6	add_user
+22	Can change user	6	change_user
+23	Can delete user	6	delete_user
+24	Can view user	6	view_user
+25	Can add manager	7	add_manager
+26	Can change manager	7	change_manager
+27	Can delete manager	7	delete_manager
+28	Can view manager	7	view_manager
+29	Can add driver	8	add_driver
+30	Can change driver	8	change_driver
+31	Can delete driver	8	delete_driver
+32	Can view driver	8	view_driver
+33	Can add designated_ route	9	add_designated_route
+34	Can change designated_ route	9	change_designated_route
+35	Can delete designated_ route	9	delete_designated_route
+36	Can view designated_ route	9	view_designated_route
+37	Can add route	10	add_route
+38	Can change route	10	change_route
+39	Can delete route	10	delete_route
+40	Can view route	10	view_route
+41	Can add designated route	11	add_designatedroute
+42	Can change designated route	11	change_designatedroute
+43	Can delete designated route	11	delete_designatedroute
+44	Can view designated route	11	view_designatedroute
+45	Can add health condition	12	add_healthcondition
+46	Can change health condition	12	change_healthcondition
+47	Can delete health condition	12	delete_healthcondition
+48	Can view health condition	12	view_healthcondition
+49	Can add Token	13	add_token
+50	Can change Token	13	change_token
+51	Can delete Token	13	delete_token
+52	Can view Token	13	view_token
+53	Can add token	14	add_tokenproxy
+54	Can change token	14	change_tokenproxy
+55	Can delete token	14	delete_tokenproxy
+56	Can view token	14	view_tokenproxy
+\.
+
+
+--
+-- Data for Name: authtoken_token; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.authtoken_token (key, created, user_id) FROM stdin;
+411705ada2484e142fb3b6ad60e6b5859c14456e	2020-11-17 10:14:56.655143+02	15
+dad9c079f9428e9fea5f1554f68f241b1af3884b	2020-11-17 13:41:16.762854+02	12
+8624fd0bca60ff8431b31184ae42a3713188bef3	2020-11-17 14:12:36.884167+02	21
+62a167d24795735a36420ddce6c9e53af9d49014	2020-11-17 20:37:57.176635+02	22
+31131921edb004ad27d625f162fa3835e09b82a1	2020-11-17 20:47:37.733946+02	23
+056cf895f31f07dc961d79d67d750b13d3033423	2020-11-29 16:41:39.121343+02	1
+cee2aa4b6c2f2ba27396db70f9bebaac723d45ff	2020-11-30 16:36:31.737471+02	25
+ba980648b6b65345054a81a43a6eab16d132b3cc	2020-11-30 18:52:28.553793+02	26
+c0921020fee99f173c4d36f20bc1ed94dae8d1a5	2020-11-30 18:53:57.84758+02	27
+4a67c2bd566fa321b4ca1dbbf51612323e6f1810	2020-11-30 18:54:58.967632+02	28
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+1	2020-11-07 16:43:36.091949+02	1	Manager object (1)	1	[{"added": {}}]	7	1
+2	2020-11-07 16:44:06.123336+02	1	Route object (1)	1	[{"added": {}}]	10	1
+3	2020-11-07 17:58:46.353062+02	2	Route object (2)	1	[{"added": {}}]	10	1
+4	2020-11-08 18:19:14.618931+02	2		1	[{"added": {}}]	6	1
+5	2020-11-08 18:19:55.48757+02	2	Driver object (2)	1	[{"added": {}}]	8	1
+6	2020-11-08 18:20:15.644141+02	2	vasya@nure.ua	2	[{"changed": {"fields": ["First name", "Last name", "Email address"]}}]	6	1
+7	2020-11-09 11:22:19.205789+02	1	DesignatedRoute object (1)	1	[{"added": {}}]	11	1
+8	2020-11-11 14:11:01.25014+02	3		1	[{"added": {}}]	6	1
+9	2020-11-11 14:11:18.360778+02	3	kolya@nure.ua	2	[{"changed": {"fields": ["First name", "Last name", "Email address"]}}]	6	1
+10	2020-11-11 14:11:49.496655+02	4		1	[{"added": {}}]	6	1
+11	2020-11-11 14:12:01.851975+02	4	sasha@nure.ua	2	[{"changed": {"fields": ["First name", "Last name", "Email address"]}}]	6	1
+12	2020-11-11 14:12:27.603927+02	5		1	[{"added": {}}]	6	1
+13	2020-11-11 14:13:49.789213+02	5	masha@nure.ua	2	[{"changed": {"fields": ["First name", "Last name", "Email address"]}}]	6	1
+14	2020-11-11 14:27:08.412852+02	3	Kolya Kolich	1	[{"added": {}}]	8	1
+15	2020-11-11 14:28:56.81389+02	4	Sasha Sashkin	1	[{"added": {}}]	8	1
+16	2020-11-11 14:29:47.405078+02	1	admin@me.com	2	[{"changed": {"fields": ["First name", "Last name"]}}]	6	1
+17	2020-11-11 14:37:48.123326+02	2	Route object (2)	2	[{"changed": {"fields": ["Title"]}}]	10	1
+18	2020-11-11 14:48:54.749084+02	4	Sasha Sashkin	3		8	1
+19	2020-11-11 14:48:54.751923+02	3	Kolya Kolich	3		8	1
+20	2020-11-11 14:48:54.753332+02	2	Vasya Petkin	3		8	1
+21	2020-11-11 14:55:32.833501+02	3	Kolya Kolich	1	[{"added": {}}]	8	1
+22	2020-11-11 14:56:03.745856+02	5	Masha Maskina	1	[{"added": {}}]	8	1
+23	2020-11-11 14:57:22.009246+02	2	DesignatedRoute object (2)	1	[{"added": {}}]	11	1
+24	2020-11-11 14:57:42.009983+02	1	Casual standard trip from one point to another	2	[{"changed": {"fields": ["Title"]}}]	10	1
+25	2020-11-11 15:13:40.950742+02	3	Trip	1	[{"added": {}}]	10	1
+26	2020-11-11 15:14:04.256008+02	4	Trip 2	1	[{"added": {}}]	10	1
+27	2020-11-11 15:14:47.921384+02	4	Sasha Sashkin	1	[{"added": {}}]	8	1
+28	2020-11-11 15:16:25.60068+02	6		1	[{"added": {}}]	6	1
+29	2020-11-11 15:16:41.616919+02	6	natasha@nure.ua	2	[{"changed": {"fields": ["First name", "Last name", "Email address"]}}]	6	1
+30	2020-11-11 15:17:04.669054+02	7		1	[{"added": {}}]	6	1
+31	2020-11-11 15:17:15.888362+02	7	nastya@nure.ua	2	[{"changed": {"fields": ["First name", "Last name", "Email address"]}}]	6	1
+32	2020-11-11 15:28:18.735814+02	3	DesignatedRoute object (3)	1	[{"added": {}}]	11	1
+33	2020-11-16 21:23:47.943986+02	1	HealthCondition object (1)	1	[{"added": {}}]	12	1
+34	2020-11-16 21:29:51.017217+02	1	HealthCondition object (1)	2	[]	12	1
+35	2020-11-16 21:30:18.888565+02	2	HealthCondition object (2)	1	[{"added": {}}]	12	1
+36	2020-11-17 10:15:44.368603+02	14	leha@nure.ua	3		6	1
+37	2020-11-17 10:16:04.883118+02	8	test@nure.ua	3		6	1
+38	2020-11-17 14:06:47.015359+02	17	natalie@nure.ua	3		6	1
+39	2020-11-17 14:06:47.017778+02	6	natasha@nure.ua	3		6	1
+40	2020-11-17 14:08:27.145263+02	18	natalie@nure.ua	3		6	1
+41	2020-11-17 14:09:39.663094+02	19	natalie@nure.ua	3		6	1
+42	2020-11-17 14:12:01.283803+02	1	Iryna Horbachova	3		8	1
+43	2020-11-17 14:12:09.070887+02	20	natalie@nure.ua	3		6	1
+44	2020-11-17 19:52:32.688168+02	21	Natalie Driver	2	[{"changed": {"fields": ["Car type", "Current location"]}}]	8	1
+45	2020-11-17 19:52:40.350048+02	5	Masha Maskina	2	[{"changed": {"fields": ["Car type"]}}]	8	1
+46	2020-11-17 19:52:46.780419+02	4	Sasha Sashkin	2	[{"changed": {"fields": ["Car type"]}}]	8	1
+47	2020-11-17 19:52:52.388302+02	3	Kolya Kolich	2	[{"changed": {"fields": ["Car type"]}}]	8	1
+48	2020-11-17 19:53:24.051404+02	21	Natalie Driver	2	[{"changed": {"fields": ["Car type"]}}]	8	1
+49	2020-11-18 15:12:10.39023+02	5	New Route	1	[{"added": {}}]	10	1
+50	2020-11-18 15:32:03.736922+02	6	Highway to hell	1	[{"added": {}}]	10	1
+51	2020-11-18 17:21:10.287466+02	21	Natalie Driver	3		8	1
+52	2020-11-25 09:40:20.738329+02	23	Rene Driver	2	[{"changed": {"fields": ["Current location", "Health state"]}}]	8	1
+53	2020-11-25 09:40:29.175659+02	22	Nastya Vaskina	2	[{"changed": {"fields": ["Current location", "Health state"]}}]	8	1
+54	2020-11-25 09:40:37.778656+02	5	Masha Maskina	2	[{"changed": {"fields": ["Car type"]}}]	8	1
+55	2020-11-25 09:40:43.761385+02	4	Sasha Sashkin	2	[{"changed": {"fields": ["Car type"]}}]	8	1
+56	2020-11-25 09:40:49.215595+02	3	Kolya Kolich	2	[{"changed": {"fields": ["Car type"]}}]	8	1
+57	2020-11-25 13:40:50.216487+02	6	DesignatedRoute object (6)	3		11	1
+58	2020-11-25 13:59:40.786504+02	7	DesignatedRoute object (7)	3		11	1
+59	2020-11-25 14:03:46.951444+02	3	DesignatedRoute object (3)	3		11	1
+60	2020-11-25 14:09:26.0389+02	9	DesignatedRoute object (9)	3		11	1
+61	2020-11-25 14:09:26.040891+02	8	DesignatedRoute object (8)	3		11	1
+62	2020-11-25 14:14:10.963371+02	16	Bodya Par in Dota	3		7	1
+63	2020-11-25 14:14:10.96607+02	15	Iryna Hor in Uber	3		7	1
+64	2020-11-25 14:14:10.967738+02	13	Roman DeWitt in League	3		7	1
+65	2020-11-25 14:14:10.969256+02	12	Andrew DeWitt in NURE	3		7	1
+66	2020-11-25 14:15:03.256667+02	16	Bodya Par	1	[{"added": {}}]	8	1
+67	2020-11-25 14:15:38.585703+02	21	Natalie Driver	1	[{"added": {}}]	8	1
+68	2020-11-25 14:16:37.216867+02	7	Nastya Vasilenko	1	[{"added": {}}]	8	1
+69	2020-11-25 14:17:11.974285+02	12	Andrew DeWitt	1	[{"added": {}}]	8	1
+70	2020-11-25 14:17:50.52662+02	13	Roman DeWitt	1	[{"added": {}}]	8	1
+71	2020-11-25 14:21:09.976437+02	12	Andrew DeWitt	2	[{"changed": {"fields": ["Pay for km"]}}]	8	1
+72	2020-11-25 14:23:09.928666+02	10	DesignatedRoute object (10)	3		11	1
+73	2020-11-26 13:19:00.613552+02	12	DesignatedRoute object (12)	3		11	1
+74	2020-11-26 13:19:00.615484+02	11	DesignatedRoute object (11)	3		11	1
+75	2020-11-26 13:33:06.716799+02	6	Highway to hell	2	[{"changed": {"fields": ["Min experience", "Min health"]}}]	10	1
+76	2020-11-26 13:33:19.983332+02	5	New Route	2	[{"changed": {"fields": ["Min experience", "Min health"]}}]	10	1
+77	2020-11-26 13:35:58.67719+02	4	Trip 2	2	[{"changed": {"fields": ["Min experience", "Min health"]}}]	10	1
+78	2020-11-26 13:36:10.629536+02	2	Mega standard trip	2	[{"changed": {"fields": ["Min experience", "Min health"]}}]	10	1
+79	2020-11-26 13:36:21.823976+02	3	Trip	2	[{"changed": {"fields": ["Min experience", "Min health"]}}]	10	1
+80	2020-11-26 13:36:31.956572+02	1	Casual standard trip from one point to another	2	[{"changed": {"fields": ["Min health"]}}]	10	1
+81	2020-11-26 13:36:46.17505+02	16	DesignatedRoute object (16)	3		11	1
+82	2020-11-26 13:36:46.179817+02	15	DesignatedRoute object (15)	3		11	1
+83	2020-11-26 13:36:46.181042+02	14	DesignatedRoute object (14)	3		11	1
+84	2020-11-26 13:36:46.18222+02	13	DesignatedRoute object (13)	3		11	1
+85	2020-11-26 13:42:22.764294+02	21	DesignatedRoute object (21)	3		11	1
+86	2020-11-26 13:42:22.767444+02	20	DesignatedRoute object (20)	3		11	1
+87	2020-11-26 13:42:22.768674+02	19	DesignatedRoute object (19)	3		11	1
+88	2020-11-26 13:42:22.769729+02	18	DesignatedRoute object (18)	3		11	1
+89	2020-11-26 13:42:22.770648+02	17	DesignatedRoute object (17)	3		11	1
+90	2020-11-28 10:54:45.660053+02	24	DesignatedRoute object (24)	3		11	1
+91	2020-11-28 10:54:45.664983+02	23	DesignatedRoute object (23)	3		11	1
+92	2020-11-28 10:54:45.666974+02	22	DesignatedRoute object (22)	3		11	1
+93	2020-11-28 10:55:30.930068+02	27	DesignatedRoute object (27)	3		11	1
+94	2020-11-28 10:55:30.933081+02	26	DesignatedRoute object (26)	3		11	1
+95	2020-11-28 10:55:30.93452+02	25	DesignatedRoute object (25)	3		11	1
+96	2020-11-28 11:31:56.535686+02	5	Masha Maskina	2	[{"changed": {"fields": ["Experience"]}}]	8	1
+97	2020-11-28 11:32:17.073228+02	30	DesignatedRoute object (30)	3		11	1
+98	2020-11-28 11:32:17.076102+02	29	DesignatedRoute object (29)	3		11	1
+99	2020-11-28 11:32:17.078436+02	28	DesignatedRoute object (28)	3		11	1
+\.
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	contenttypes	contenttype
+5	sessions	session
+6	users	user
+7	users	manager
+8	users	driver
+9	routes	designated_route
+10	routes	route
+11	routes	designatedroute
+12	health_condition	healthcondition
+13	authtoken	token
+14	authtoken	tokenproxy
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2020-10-28 12:22:53.490969+02
+2	contenttypes	0002_remove_content_type_name	2020-10-28 12:22:53.500192+02
+3	auth	0001_initial	2020-10-28 12:22:53.52107+02
+4	auth	0002_alter_permission_name_max_length	2020-10-28 12:22:53.54161+02
+5	auth	0003_alter_user_email_max_length	2020-10-28 12:22:53.547547+02
+6	auth	0004_alter_user_username_opts	2020-10-28 12:22:53.553652+02
+7	auth	0005_alter_user_last_login_null	2020-10-28 12:22:53.559771+02
+8	auth	0006_require_contenttypes_0002	2020-10-28 12:22:53.561962+02
+9	auth	0007_alter_validators_add_error_messages	2020-10-28 12:22:53.567485+02
+10	auth	0008_alter_user_username_max_length	2020-10-28 12:22:53.575499+02
+11	auth	0009_alter_user_last_name_max_length	2020-10-28 12:22:53.581195+02
+12	auth	0010_alter_group_name_max_length	2020-10-28 12:22:53.589055+02
+13	auth	0011_update_proxy_permissions	2020-10-28 12:22:53.596194+02
+14	auth	0012_alter_user_first_name_max_length	2020-10-28 12:22:53.601333+02
+15	users	0001_initial	2020-10-28 12:22:53.651724+02
+16	admin	0001_initial	2020-10-28 12:22:53.685531+02
+17	admin	0002_logentry_remove_auto_add	2020-10-28 12:22:53.700575+02
+18	admin	0003_logentry_add_action_flag_choices	2020-10-28 12:22:53.71051+02
+19	routes	0001_initial	2020-10-28 12:22:53.725018+02
+20	routes	0002_auto_20201028_1022	2020-10-28 12:22:53.746899+02
+21	sessions	0001_initial	2020-10-28 12:22:53.756797+02
+22	users	0002_driver_health_state	2020-11-01 18:08:07.958188+02
+23	users	0003_driver_license_type	2020-11-07 16:41:49.383619+02
+24	routes	0003_auto_20201107_1407	2020-11-07 16:41:49.709176+02
+25	routes	0004_auto_20201107_1441	2020-11-07 16:41:49.731671+02
+26	users	0004_driver_car_max_load	2020-11-07 16:41:49.74145+02
+27	users	0005_remove_driver_current_location	2020-11-11 14:27:54.877947+02
+28	routes	0005_route_title	2020-11-11 14:34:45.31175+02
+29	users	0006_auto_20201111_1247	2020-11-11 14:47:45.567913+02
+30	users	0007_auto_20201111_1249	2020-11-11 14:49:28.450153+02
+31	users	0008_auto_20201116_1541	2020-11-16 21:20:24.304721+02
+32	health_condition	0001_initial	2020-11-16 21:20:24.36624+02
+33	authtoken	0001_initial	2020-11-17 10:14:23.368322+02
+34	authtoken	0002_auto_20160226_1747	2020-11-17 10:14:23.454079+02
+35	authtoken	0003_tokenproxy	2020-11-17 10:14:23.457541+02
+36	routes	0006_auto_20201126_1024	2020-11-26 12:24:30.73929+02
+37	users	0009_auto_20201126_1024	2020-11-26 12:24:30.757609+02
+38	users	0010_auto_20201130_1800	2020-11-30 20:00:37.248391+02
+\.
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+vefda4m1asqsnnk0pbrkl11w0hycrmaw	.eJxVjEEOwiAQRe_C2hCg0mFcuu8ZyAwwUjVtUtqV8e7apAvd_vfef6lI21rj1soSx6wuyqrT78aUHmXaQb7TdJt1mqd1GVnvij5o08Ocy_N6uH8HlVr91mQYLVIBBsrpHKxBAM8ZCrLDXpyIp5664A0VASFOnbhACQFR2Kv3B_6wON4:1kXicK:jlgIzHKktKwrhJCcrb4PS7w0wwnGJPWBURdK3PaHzTU	2020-11-11 12:23:44.656547+02
+9kwn2umhvezx8978oi86iac40kxjk1cr	.eJxVjEEOwiAQRe_C2hCg0mFcuu8ZyAwwUjVtUtqV8e7apAvd_vfef6lI21rj1soSx6wuyqrT78aUHmXaQb7TdJt1mqd1GVnvij5o08Ocy_N6uH8HlVr91mQYLVIBBsrpHKxBAM8ZCrLDXpyIp5664A0VASFOnbhACQFR2Kv3B_6wON4:1kbPR3:_qKRgbeKc3FQjFTHieS2KpXPxD04k_c1KDbjb69d19U	2020-11-21 16:43:21.18903+02
+51edbtokk31d2wmlql7la4jrxoxdfgv6	.eJxVjEEOwiAQRe_C2hCg0mFcuu8ZyAwwUjVtUtqV8e7apAvd_vfef6lI21rj1soSx6wuyqrT78aUHmXaQb7TdJt1mqd1GVnvij5o08Ocy_N6uH8HlVr91mQYLVIBBsrpHKxBAM8ZCrLDXpyIp5664A0VASFOnbhACQFR2Kv3B_6wON4:1kgpog:bEtDVOZVBzIvqc9BwBadbVYXchKsEHnv4B3piTbkbzo	2020-12-06 15:54:10.032214+02
+\.
+
+
+--
+-- Data for Name: health_condition_healthcondition; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.health_condition_healthcondition (id, heart_rate, body_temperature, respiration_rate_per_minute, blood_pressure_systolic, blood_pressure_diastolic, blood_oxygen_level, blood_alcohol_content, drugs_alcohol_content, datetime, driver_id) FROM stdin;
+1	120	36	12	120	80	97	0	0	2020-11-16 21:23:47.942103+02	3
+2	130	37	14	120	80	98	0	0	2020-11-16 21:30:18.886846+02	5
+\.
+
+
+--
+-- Data for Name: routes_designatedroute; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.routes_designatedroute (id, status, driver_id, route_id) FROM stdin;
+2	N	3	2
+31	N	5	6
+32	N	22	1
+33	N	12	5
+38	N	7	3
+\.
+
+
+--
+-- Data for Name: routes_route; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.routes_route (id, start_location, end_location, manager_id, load_quantity, load_type, priority, title, min_experience, min_health) FROM stdin;
+6	0101000020E61000005B44EEFFBFA93D405FBD407DEBBB4840	0101000020E610000094B4F1FFFFE727400835E8B5F4964940	1	20	P	H	Highway to hell	10	8
+5	0101000020E61000004CE2F5FF3FEB404005692BA375944740	0101000020E6100000B6FDF4FFBF6942400835E8B5F4964940	1	40	P	S	New Route	15	6
+4	0101000020E61000006906F1FF7F0C39406B07DF0793BF4840	0101000020E6100000DEDBF5FF7FF64040B566CFB10B384740	1	499	C	H	Trip 2	15	3
+2	0101000020E6100000CCA8EEFFFF003D408D98AD43CE8C4740	0101000020E61000007DA9EDFF7FAC3E409BF19ADA64334940	1	200	C	S	Mega standard trip	4	3
+3	0101000020E61000006C64F1FFFF6E38406F0D291564DA4640	0101000020E61000001A07F0FFFFB72A40DC75000B5A574540	1	1	P	L	Trip	1	5
+1	0101000020E6100000D93BF1FF7FB2384055CB3E51CB3F4740	0101000020E6100000E139F6FFFF5840406A90154EC00D4840	1	2	P	S	Casual standard trip from one point to another	0	4
+\.
+
+
+--
+-- Data for Name: spatial_ref_sys; Type: TABLE DATA; Schema: public; Owner: irynahorbachova
+--
+
+COPY public.spatial_ref_sys (srid, auth_name, auth_srid, srtext, proj4text) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users_driver; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.users_driver (user_id, car_type, experience, manager_id, health_state, license_type, car_max_load, average_speed_per_hour, current_location, pay_for_km) FROM stdin;
+22	P	4	1	6	B	30	49	0101000020E61000000100000058A3933F1DE89DE4A059A43F	20
+3	P	3	1	8	B	20	70	0101000020E61000000400000010A2813F6BC953FE133284BF	10
+16	P	1	1	2	B	10	10	0101000020E6100000AE1837AD6F7FB8BF86F460BE31C68DBF	200
+21	P	38	1	5	B	200	100	0101000020E610000002000000F660923F49AFDFE44749A43F	40
+7	P	6	1	6	B	30	50	0101000020E61000000200000000E0903F19DED1FEDF8A7C3F	20
+13	P	8	1	6	B	60	150	0101000020E610000026D4EECFF7F5C43F5381B9E955A9B5BF	30
+12	P	20	1	8	B	80	70	0101000020E610000000000080072AB23F682DF2F3DB9298BF	80
+5	P	25	1	8	C	100	60	0101000020E6100000F6FFFFFF4F557EBF4248D9FEC7487C3F	20
+\.
+
+
+--
+-- Data for Name: users_manager; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.users_manager (user_id, company) FROM stdin;
+1	Neo Logistics
+24	Test
+\.
+
+
+--
+-- Data for Name: users_user; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.users_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined, is_manager, is_driver) FROM stdin;
+2	pbkdf2_sha256$216000$SGAu8uUrp1u2$sqF3XhXE/nqOLF5T0F5fpdAnp7NuULPomnfgsBt2muI=	\N	f	vasya@nure.ua	Vasya	Petkin	vasya@nure.ua	f	t	2020-11-08 18:19:14+02	f	f
+3	pbkdf2_sha256$216000$Z5ZKc0udg7ol$gA5cI9/k4x1jjE9wRtbDpnarqN2QNDkIx65m4PBoZm4=	\N	f	kolya@nure.ua	Kolya	Kolich	kolya@nure.ua	f	t	2020-11-11 14:11:01+02	f	f
+4	pbkdf2_sha256$216000$59wLx8pnfHcK$pdBleRtVUGIagOhPIPD0rSqrUnJinq+KIkSHR+qiY3o=	\N	f	sasha@nure.ua	Sasha	Sashkin	sasha@nure.ua	f	t	2020-11-11 14:11:49+02	f	f
+5	pbkdf2_sha256$216000$nMWRAQm7sMi1$A0GL9chD3umUq5BCzkesPivoCq8VcSaG/C3mxfNuMfI=	\N	f	masha@nure.ua	Masha	Maskina	masha@nure.ua	f	t	2020-11-11 14:12:27+02	f	f
+7	pbkdf2_sha256$216000$y1GQLbHhMf7Y$5785ZB+5iY2mrWado+dYrxqI9CQ1L45rOSnVHnsKklc=	\N	f	nastya@nure.ua	Nastya	Vasilenko	nastya@nure.ua	f	t	2020-11-11 15:17:04+02	f	f
+12	pbkdf2_sha256$216000$5otNczmygUG9$8CCF0GaQsE0DqDr1m6a+giiM3Am6aLr4U5sWkZJfbcI=	\N	f	andrew@nure.ua	Andrew	DeWitt	andrew@nure.ua	f	t	2020-11-17 10:06:38.605926+02	t	f
+13	pbkdf2_sha256$216000$sfnGOm3f5GO7$atzroN7i91txaywl9Jr9Wq3PTiuNCnQUlHoj9gNpN3o=	\N	f	roman@nure.ua	Roman	DeWitt	roman@nure.ua	f	t	2020-11-17 10:11:09.961761+02	t	f
+15	pbkdf2_sha256$216000$Xgpw62CPCSR0$9P9DhffOz6zFyMuAeR9uqBbMh3I4YnGs0TpP77ANYeI=	\N	f	iryna@nure.ua	Iryna	Hor	iryna@nure.ua	f	t	2020-11-17 10:14:56.574569+02	t	f
+16	pbkdf2_sha256$216000$vDsroDwlfaOg$Zh6BKLmm6erX/dO9LG7aOvs/HUU3BWfCjpWI14dzZDE=	\N	f	bodya@nure.ua	Bodya	Par	bodya@nure.ua	f	t	2020-11-17 10:19:12.611975+02	t	f
+21	pbkdf2_sha256$216000$GtL9ixOvbl1H$ClNThrCwi5v6DAqmYNr5p1j0B1V8Aor9wrDtvjS3Ibw=	\N	f	natalie@nure.ua	Natalie	Driver	natalie@nure.ua	f	t	2020-11-17 14:12:36.781641+02	t	f
+22	pbkdf2_sha256$216000$xwYaasb81Z8h$g6pUCDJfS5ZE8Z3ubQPM88R47JHsVC0UrEY2mHY7UKk=	\N	f	nastyaaa@nure.ua	Nastya	Vaskina	nastyaaa@nure.ua	f	t	2020-11-17 20:37:57.080207+02	t	f
+23	pbkdf2_sha256$216000$ZcVOkeOBngAg$eCeLXisFW/Ffl9+IcT1HbdE+C+WOVaDONnncNdBw1II=	\N	f	rene@nure.ua	Rene	Driver	rene@nure.ua	f	t	2020-11-17 20:47:37.638293+02	t	f
+1	pbkdf2_sha256$216000$ovtImH5dwIBH$4ju+jh7a2Qh/bTcba0cOejKxT8e93Jg705UqjfG+yGQ=	2020-11-22 15:54:10.02703+02	t	admin	Iryna	Horbachova	admin@me.com	t	t	2020-10-28 12:23:37+02	f	f
+24	pbkdf2_sha256$216000$3oLTfdtNPbKp$9Cd+m/wybWrbb5jUb2UapXjtUZdTVVAYrHXjpWgZ454=	\N	f	test@nure.ua	Test	Test	test@nure.ua	f	t	2020-11-29 16:14:29.799058+02	t	f
+25	pbkdf2_sha256$216000$sq7q1jeUJclj$izq0zLDz4D3MWGeQIJaWOxcg02dCRYlHbXPaKu+FFsA=	\N	f	react@nure.ua	React	Driver	react@nure.ua	f	t	2020-11-30 16:36:31.560725+02	t	f
+26	pbkdf2_sha256$216000$Th5MEt82HwU4$xwi1fOw+70XNfNfMfeaQjaTZc13P99RAByCq7323lOw=	\N	f	nreuser@nure.ua	New	User	nreuser@nure.ua	f	t	2020-11-30 18:52:28.465665+02	t	f
+27	pbkdf2_sha256$216000$6JmMFb2NZFEP$noUbuXXq5lHaHyaI7N+pEF/NYaWy+cICo6LzH8zIhuQ=	\N	f	driveeeer@nure.ua	Some	Driver	driveeeer@nure.ua	f	t	2020-11-30 18:53:57.760212+02	t	f
+28	pbkdf2_sha256$216000$cj2dPiY4Gs8Y$AIiVhFWREb876OHhh7yEtOM+cG1o0yFvMueTDjx6MXo=	\N	f	dddriver@nure.ua	Some	Driveer	dddriver@nure.ua	f	t	2020-11-30 18:54:58.880126+02	t	f
+\.
+
+
+--
+-- Data for Name: users_user_groups; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.users_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: admin
+--
+
+COPY public.users_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: topology; Type: TABLE DATA; Schema: topology; Owner: irynahorbachova
+--
+
+COPY topology.topology (id, name, srid, "precision", hasz) FROM stdin;
+\.
+
+
+--
+-- Data for Name: layer; Type: TABLE DATA; Schema: topology; Owner: irynahorbachova
+--
+
+COPY topology.layer (topology_id, layer_id, schema_name, table_name, feature_column, feature_type, level, child_id) FROM stdin;
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 56, true);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 99, true);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 14, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 38, true);
+
+
+--
+-- Name: health_condition_healthcondition_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.health_condition_healthcondition_id_seq', 2, true);
+
+
+--
+-- Name: routes_designatedroute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.routes_designatedroute_id_seq', 38, true);
+
+
+--
+-- Name: routes_route_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.routes_route_id_seq', 13, true);
+
+
+--
+-- Name: users_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.users_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.users_user_id_seq', 28, true);
+
+
+--
+-- Name: users_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: admin
+--
+
+SELECT pg_catalog.setval('public.users_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: authtoken_token authtoken_token_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.authtoken_token
+    ADD CONSTRAINT authtoken_token_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: authtoken_token authtoken_token_user_id_key; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.authtoken_token
+    ADD CONSTRAINT authtoken_token_user_id_key UNIQUE (user_id);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: health_condition_healthcondition health_condition_healthcondition_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.health_condition_healthcondition
+    ADD CONSTRAINT health_condition_healthcondition_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: routes_designatedroute routes_designatedroute_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.routes_designatedroute
+    ADD CONSTRAINT routes_designatedroute_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: routes_route routes_route_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.routes_route
+    ADD CONSTRAINT routes_route_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_driver users_driver_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_driver
+    ADD CONSTRAINT users_driver_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: users_manager users_manager_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_manager
+    ADD CONSTRAINT users_manager_pkey PRIMARY KEY (user_id);
+
+
+--
+-- Name: users_user_groups users_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_groups users_user_groups_user_id_group_id_b88eab82_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_user_id_group_id_b88eab82_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: users_user users_user_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_user
+    ADD CONSTRAINT users_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_user_permissions users_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_user_permissions users_user_user_permissions_user_id_permission_id_43338c45_uniq; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_permissions_user_id_permission_id_43338c45_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: users_user users_user_username_key; Type: CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_user
+    ADD CONSTRAINT users_user_username_key UNIQUE (username);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: authtoken_token_key_10f0b77e_like; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX authtoken_token_key_10f0b77e_like ON public.authtoken_token USING btree (key varchar_pattern_ops);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: health_condition_healthcondition_driver_id_facf531f; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX health_condition_healthcondition_driver_id_facf531f ON public.health_condition_healthcondition USING btree (driver_id);
+
+
+--
+-- Name: routes_designatedroute_driver_id_3168f6d7; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX routes_designatedroute_driver_id_3168f6d7 ON public.routes_designatedroute USING btree (driver_id);
+
+
+--
+-- Name: routes_designatedroute_route_id_b89bd471; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX routes_designatedroute_route_id_b89bd471 ON public.routes_designatedroute USING btree (route_id);
+
+
+--
+-- Name: routes_route_end_location_id; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX routes_route_end_location_id ON public.routes_route USING gist (end_location);
+
+
+--
+-- Name: routes_route_manager_id_be140b9b; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX routes_route_manager_id_be140b9b ON public.routes_route USING btree (manager_id);
+
+
+--
+-- Name: routes_route_start_location_id; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX routes_route_start_location_id ON public.routes_route USING gist (start_location);
+
+
+--
+-- Name: users_driver_current_location_id; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX users_driver_current_location_id ON public.users_driver USING gist (current_location);
+
+
+--
+-- Name: users_driver_manager_id_8e0d49f7; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX users_driver_manager_id_8e0d49f7 ON public.users_driver USING btree (manager_id);
+
+
+--
+-- Name: users_user_groups_group_id_9afc8d0e; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX users_user_groups_group_id_9afc8d0e ON public.users_user_groups USING btree (group_id);
+
+
+--
+-- Name: users_user_groups_user_id_5f6f5a90; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX users_user_groups_user_id_5f6f5a90 ON public.users_user_groups USING btree (user_id);
+
+
+--
+-- Name: users_user_user_permissions_permission_id_0b93982e; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX users_user_user_permissions_permission_id_0b93982e ON public.users_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: users_user_user_permissions_user_id_20aca447; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX users_user_user_permissions_user_id_20aca447 ON public.users_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: users_user_username_06e46fe6_like; Type: INDEX; Schema: public; Owner: admin
+--
+
+CREATE INDEX users_user_username_06e46fe6_like ON public.users_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: authtoken_token authtoken_token_user_id_35299eff_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.authtoken_token
+    ADD CONSTRAINT authtoken_token_user_id_35299eff_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: health_condition_healthcondition health_condition_hea_driver_id_facf531f_fk_users_dri; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.health_condition_healthcondition
+    ADD CONSTRAINT health_condition_hea_driver_id_facf531f_fk_users_dri FOREIGN KEY (driver_id) REFERENCES public.users_driver(user_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: routes_designatedroute routes_designatedrou_driver_id_3168f6d7_fk_users_dri; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.routes_designatedroute
+    ADD CONSTRAINT routes_designatedrou_driver_id_3168f6d7_fk_users_dri FOREIGN KEY (driver_id) REFERENCES public.users_driver(user_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: routes_designatedroute routes_designatedroute_route_id_b89bd471_fk_routes_route_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.routes_designatedroute
+    ADD CONSTRAINT routes_designatedroute_route_id_b89bd471_fk_routes_route_id FOREIGN KEY (route_id) REFERENCES public.routes_route(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: routes_route routes_route_manager_id_be140b9b_fk_users_manager_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.routes_route
+    ADD CONSTRAINT routes_route_manager_id_be140b9b_fk_users_manager_user_id FOREIGN KEY (manager_id) REFERENCES public.users_manager(user_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_driver users_driver_manager_id_8e0d49f7_fk_users_manager_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_driver
+    ADD CONSTRAINT users_driver_manager_id_8e0d49f7_fk_users_manager_user_id FOREIGN KEY (manager_id) REFERENCES public.users_manager(user_id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_driver users_driver_user_id_047e69b8_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_driver
+    ADD CONSTRAINT users_driver_user_id_047e69b8_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_manager users_manager_user_id_f7714736_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_manager
+    ADD CONSTRAINT users_manager_user_id_f7714736_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_groups users_user_groups_group_id_9afc8d0e_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_group_id_9afc8d0e_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_groups users_user_groups_user_id_5f6f5a90_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_user_groups
+    ADD CONSTRAINT users_user_groups_user_id_5f6f5a90_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_user_permissions users_user_user_perm_permission_id_0b93982e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_perm_permission_id_0b93982e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_user_permissions users_user_user_permissions_user_id_20aca447_fk_users_user_id; Type: FK CONSTRAINT; Schema: public; Owner: admin
+--
+
+ALTER TABLE ONLY public.users_user_user_permissions
+    ADD CONSTRAINT users_user_user_permissions_user_id_20aca447_fk_users_user_id FOREIGN KEY (user_id) REFERENCES public.users_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: SCHEMA topology; Type: ACL; Schema: -; Owner: irynahorbachova
+--
+
+GRANT USAGE ON SCHEMA topology TO admin;
+
+
+--
+-- Name: TABLE layer; Type: ACL; Schema: topology; Owner: irynahorbachova
+--
+
+GRANT SELECT ON TABLE topology.layer TO admin;
+
+
+--
+-- Name: TABLE topology; Type: ACL; Schema: topology; Owner: irynahorbachova
+--
+
+GRANT SELECT ON TABLE topology.topology TO admin;
+
+
+--
+-- Name: SEQUENCE topology_id_seq; Type: ACL; Schema: topology; Owner: irynahorbachova
+--
+
+GRANT SELECT ON SEQUENCE topology.topology_id_seq TO admin;
+
+
+--
+-- PostgreSQL database dump complete
+--
+

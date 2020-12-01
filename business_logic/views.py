@@ -9,6 +9,7 @@ from routes.serializers import DesignatedRouteSerializer
 
 from enum import Enum
 import math
+import os
 
 
 class Criterias(Enum):
@@ -246,3 +247,16 @@ def designate_routes(request):
 
     return Response("Routes successfully designated")
 
+
+@api_view(http_method_names=['POST'])
+@permission_classes([IsAuthenticated])
+def backup_db(request):
+    os.system('python manage.py dbbackup')
+    return Response("Backup successfully made")
+
+
+@api_view(http_method_names=['POST'])
+@permission_classes([IsAuthenticated])
+def restore_db(request):
+    os.system('python manage.py dbrestore')
+    return Response("Restore successfully made")
